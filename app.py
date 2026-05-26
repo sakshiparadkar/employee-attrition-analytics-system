@@ -197,13 +197,16 @@ except Exception as e:
 # ══════════════════════════════════════════════════════════════════════════════
 if "Home" in page:
     st.markdown("<h1 style='color:#e2e8f0; margin-bottom:4px;'>Employee Attrition Predictor</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='color:#8892a4; font-size:1rem; margin-bottom:32px;'>Identify at-risk employees early. Retain talent. Reduce costs.</p>", unsafe_allow_html=True)
+    st.markdown("<p style='color:#8892a4; font-size:1rem; margin-bottom:12px;'>Identify at-risk employees early. Retain talent. Reduce costs.</p>", unsafe_allow_html=True)
+    st.markdown("""
+    """, unsafe_allow_html=True)
 
     attrition_rate = (df["Attrition"] == "Yes").mean()
     avg_income = df["MonthlyIncome"].mean()
     high_risk = (df["Attrition"] == "Yes").sum()
     dept_most = df[df["Attrition"] == "Yes"]["Department"].value_counts().idxmax()
 
+    # ── Metric Cards ──
     c1, c2, c3, c4 = st.columns(4)
     cards = [
         (c1, f"{attrition_rate:.1%}", "Overall Attrition Rate", "#f87171"),
@@ -220,13 +223,55 @@ if "Home" in page:
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
+
+    # ── Quick Stats Bar ──
+    total_emp = len(df)
+    total_dept = df["Department"].nunique()
+    model_acc = "80.95%"
+    features_used = 27
+    st.markdown(f"""
+        <div style='display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px;'>
+            <div style='background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:6px 16px; font-size:0.82rem; color:#e2e8f0;'>
+                👥 Total Employees: <strong>{total_emp}</strong>
+            </div>
+            <div style='background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:6px 16px; font-size:0.82rem; color:#e2e8f0;'>
+                🏢 Departments: <strong>{total_dept}</strong>
+            </div>
+            <div style='background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:6px 16px; font-size:0.82rem; color:#e2e8f0;'>
+                🧠 Features Used: <strong>{features_used}</strong>
+            </div>
+            <div style='background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:6px 16px; font-size:0.82rem; color:#e2e8f0;'>
+                🎯 Model Accuracy: <strong>{model_acc}</strong>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # ── Did You Know ──
+    ot_rate = df[df["OverTime"] == "Yes"]["Attrition"].apply(lambda x: x == "Yes").mean()
+    no_ot_rate = df[df["OverTime"] == "No"]["Attrition"].apply(lambda x: x == "Yes").mean()
+    multiplier = round(ot_rate / no_ot_rate, 1)
+    st.markdown(f"""
+        <div style='background:linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.08));
+                    border:1px solid rgba(99,102,241,0.3); border-radius:12px;
+                    padding:16px 20px; margin-bottom:24px; display:flex; align-items:center; gap:14px;'>
+            <div style='font-size:2rem;'>💡</div>
+            <div>
+                <div style='color:#a5b4fc; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;'>Did You Know?</div>
+                <div style='color:#ffffff; font-size:0.95rem; margin-top:4px; font-weight:500;'>
+                    Employees doing overtime are <span style='color:#f87171; font-weight:700;'>{multiplier}x more likely</span> to leave than those who don't.
+                </div>
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    # ── Main Row: What This App Does + Chart ──
     c1, c2 = st.columns([1.2, 1])
 
     with c1:
         st.markdown("<div class='section-header'>What This App Does</div>", unsafe_allow_html=True)
         features = [
             ("📊", "EDA & Insights", "Visual analysis of who's leaving and why"),
-            ("🤖", "ML Model", "XGBoost trained on 1,470 employee records"),
+            ("🏆", "ML Model", "XGBoost trained on 1,470 employee records"),
             ("🔮", "Predict", "Upload employee data → get attrition risk scores"),
             ("💸", "Cost Analysis", "Estimate turnover cost impact on the business"),
         ]
@@ -235,7 +280,32 @@ if "Home" in page:
                 <div class='info-box'>
                     <span style='font-size:1.2rem;'>{icon}</span>
                     <strong style='color:#e2e8f0; margin-left:8px;'>{title}</strong>
-                    <br><span style='color:#8892a4; font-size:0.85rem; margin-left:28px;'>{desc}</span>
+                    <br><span style='color:#ffffff; font-size:0.85rem; margin-left:28px;'>{desc}</span>
+                </div>
+            """, unsafe_allow_html=True)
+
+        # ── Top 3 Attrition Reasons ──
+        st.markdown("<div class='section-header' style='margin-top:24px;'>🔥 Top Attrition Drivers</div>", unsafe_allow_html=True)
+        drivers = [
+            ("1", "Overtime", "Employees doing overtime leave 3x more", "#f87171"),
+            ("2", "Low Salary", "Bottom salary band has highest churn", "#fbbf24"),
+            ("3", "Job Satisfaction", "Score 1–2 employees are highest risk", "#a78bfa"),
+        ]
+        for rank, title, desc, color in drivers:
+            st.markdown(f"""
+                <div style='display:flex; align-items:center; gap:14px;
+                            background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+                            border-radius:10px; padding:12px 16px; margin-bottom:8px;'>
+                    <div style='width:28px; height:28px; border-radius:50%;
+                                background:{color}22; border:1.5px solid {color};
+                                color:{color}; font-weight:700; font-size:0.85rem;
+                                display:flex; align-items:center; justify-content:center; flex-shrink:0;'>
+                        {rank}
+                    </div>
+                    <div>
+                        <div style='color:#e2e8f0; font-weight:600; font-size:0.9rem;'>{title}</div>
+                        <div style='color:#8892a4; font-size:0.8rem; margin-top:2px;'>{desc}</div>
+                    </div>
                 </div>
             """, unsafe_allow_html=True)
 
@@ -245,7 +315,7 @@ if "Home" in page:
             labels=["Stayed", "Left"],
             values=[att_counts.get("No", 0), att_counts.get("Yes", 0)],
             hole=0.65,
-            marker_colors=["#3b82f6", "#f87171"],
+            marker_colors=["#8b5cf6", "#4f46e5"],
             textinfo="percent",
             textfont_size=14,
         ))
@@ -257,10 +327,36 @@ if "Home" in page:
             margin=dict(t=30, b=10, l=10, r=10),
             title=dict(text="Attrition Distribution", font_size=15, x=0.5)
         )
-        fig.add_annotation(text=f"{attrition_rate:.1%}<br><span style='font-size:10px'>Attrition</span>",
-                          x=0.5, y=0.5, showarrow=False,
-                          font=dict(size=20, color="#f87171"))
+        fig.add_annotation(
+            text=f"{attrition_rate:.1%}<br><span style='font-size:10px'>Attrition</span>",
+            x=0.5, y=0.5, showarrow=False,
+            font=dict(size=20, color="#f87171")
+        )
         st.plotly_chart(fig, use_container_width=True)
+
+        
+
+        # ── How To Use ──
+        st.markdown("""
+            <div style='background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+                        border-radius:12px; padding:16px 18px; margin-top:8px;'>
+                <div style='color:#a5b4fc; font-size:0.75rem; font-weight:700;
+                            text-transform:uppercase; letter-spacing:0.08em; margin-bottom:12px;'>
+                    🎯 How To Use
+                </div>
+                <div style='display:flex; flex-direction:column; gap:8px;'>
+                    <div style='color:#ffffff; font-size:0.85rem;'>
+                        <span style='color:#6366f1; font-weight:700;'>Step 1</span> → Go to Predict Attrition
+                    </div>
+                    <div style='color:#ffffff; font-size:0.85rem;'>
+                        <span style='color:#6366f1; font-weight:700;'>Step 2</span> → Upload Employee CSV
+                    </div>
+                    <div style='color:#ffffff; font-size:0.85rem;'>
+                        <span style='color:#6366f1; font-weight:700;'>Step 3</span> → View Risk Scores & Download Report
+                    </div>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -503,6 +599,7 @@ elif "Model" in page:
 # PAGE 4 — PREDICT
 # ══════════════════════════════════════════════════════════════════════════════
 elif "Predict" in page:
+    import glob
     st.markdown("<h1 style='color:#e2e8f0;'>🔮 Predict Employee Attrition</h1>", unsafe_allow_html=True)
     st.markdown("<p style='color:#8892a4;'>Upload your employee CSV and get instant attrition risk scores.</p>", unsafe_allow_html=True)
     st.markdown("---")
@@ -519,7 +616,6 @@ elif "Predict" in page:
             </div>
         """, unsafe_allow_html=True)
 
-        # Sample download
         from data.generate_data import generate_sample_upload
         sample_df = generate_sample_upload(20)
         st.download_button(
@@ -527,11 +623,28 @@ elif "Predict" in page:
             data=sample_df.to_csv(index=False),
             file_name="sample_employees.csv",
             mime="text/csv",
-            use_container_width=True
+            use_container_width=True,
+            key="download_sample_csv"
         )
 
+        # ── Single Employee Sample Downloads ──────────────────────────────
+        profile_files = sorted(glob.glob("data/single_employee*.csv"))
+        if profile_files:
+            for i, fpath in enumerate(profile_files):
+                emp_df = pd.read_csv(fpath)
+                emp    = emp_df.iloc[0]
+                st.download_button(
+                    label=f"📄 Download Single Record — Employee {i+1}",
+                    data=emp_df.to_csv(index=False),
+                    file_name=os.path.basename(fpath),
+                    mime="text/csv",
+                    use_container_width=True,
+                    key=f"download_single_emp_{i}"
+                )
+
         uploaded = st.file_uploader("Upload Employee CSV", type=["csv"],
-                                     label_visibility="collapsed")
+                                     label_visibility="collapsed",
+                                     key="predict_upload")
 
     with c2:
         st.markdown("<div class='section-header'>Risk Level Guide</div>", unsafe_allow_html=True)
@@ -570,7 +683,6 @@ elif "Predict" in page:
             results_df["Risk Score (%)"] = (probs * 100).round(1)
             results_df["Risk Level"] = [risk_label(p)[0] for p in probs]
 
-            # Add key input cols for context
             for col in ["Department", "MonthlyIncome", "OverTime", "JobSatisfaction"]:
                 if col in input_df.columns:
                     results_df[col] = input_df[col].values
@@ -578,7 +690,6 @@ elif "Predict" in page:
             st.markdown("---")
             st.markdown("<div class='section-header'>📋 Prediction Results</div>", unsafe_allow_html=True)
 
-            # Summary metrics
             high = (probs >= 0.65).sum()
             med = ((probs >= 0.35) & (probs < 0.65)).sum()
             low = (probs < 0.35).sum()
@@ -592,13 +703,11 @@ elif "Predict" in page:
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-            # Filter
             filter_risk = st.selectbox("Filter by Risk Level", ["All", "🔴 High", "🟡 Medium", "🟢 Low"])
             display_df = results_df.copy()
             if filter_risk != "All":
                 display_df = display_df[display_df["Risk Level"] == filter_risk]
 
-            # Style table
             def color_risk(val):
                 if "High" in str(val): return "color: #f87171; font-weight: 600"
                 elif "Medium" in str(val): return "color: #fbbf24; font-weight: 600"
@@ -610,15 +719,14 @@ elif "Predict" in page:
                 use_container_width=True, hide_index=True, height=350
             )
 
-            # Download predictions
             st.download_button(
                 "📥 Download Full Report",
                 data=results_df.to_csv(index=False),
                 file_name="attrition_predictions.csv",
-                mime="text/csv"
+                mime="text/csv",
+                key="download_full_report"
             )
 
-            # Cost Calculator
             st.markdown("---")
             st.markdown("<div class='section-header'>💸 Turnover Cost Calculator</div>", unsafe_allow_html=True)
             c1, c2 = st.columns(2)
@@ -635,7 +743,6 @@ elif "Predict" in page:
                 annual = avg_salary * 12
                 cost_per_person = annual * multiplier
                 total_cost = high * cost_per_person
-
                 st.markdown(f"""
                     <div class='cost-box'>
                         <div style='color:#8892a4; font-size:0.9rem;'>Estimated Turnover Cost</div>
@@ -651,7 +758,6 @@ elif "Predict" in page:
                     </div>
                 """, unsafe_allow_html=True)
 
-            # Risk Breakdown Chart
             st.markdown("<br>", unsafe_allow_html=True)
             risk_data = pd.DataFrame({
                 "Risk": ["🔴 High", "🟡 Medium", "🟢 Low"],

@@ -1,0 +1,2 @@
+EmployeeID,EmployeeName,Age,BusinessTravel,Department,DistanceFromHome,Education,EducationField,EnvironmentSatisfaction,Gender,JobRole,JobSatisfaction,MaritalStatus,MonthlyIncome,NumCompaniesWorked,OverTime,PercentSalaryHike,StockOptionLevel,TotalWorkingYears,TrainingTimesLastYear,WorkLifeBalance,YearsAtCompany,YearsInCurrentRole,YearsSinceLastPromotion,YearsWithCurrManager,JobInvolvement,JobLevel,PerformanceRating,RelationshipSatisfaction
+EMP003,Amit Verma,41,Non-Travel,Research & Development,5,4,Medical,4,Male,Manager,4,Married,98000,1,No,18,2,18,4,4,12,7,4,6,4,4,4,4

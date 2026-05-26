@@ -21,7 +21,9 @@ I wanted to answer one question: *can you actually predict when someone's going 
 Turns out — yes, pretty well. This is my end-to-end ML project using the IBM HR Analytics dataset (1,470 employees, 35 features). I built the whole thing from scratch — EDA, model training, SHAP explainability, and a Streamlit web app with a custom dark UI.
 
 **Dataset:** IBM HR Analytics — 1,470 employees, 35 features
+
 **Model:** XGBoost (80.95% accuracy, ROC-AUC: 0.82)
+
 **Interface:** Streamlit + custom dark-mode CSS
 
 
@@ -30,17 +32,11 @@ Turns out — yes, pretty well. This is my end-to-end ML project using the IBM H
 ## ✨ Features
 
 - 📊 **Interactive EDA** — 12+ charts on who leaves and why
-- 
 - 🏆 **Model Benchmarking** — LR vs RF vs XGBoost, head-to-head with ROC curves
-- 
 - 🔍 **SHAP Explainability** — not just *what* the model predicted, but *why*
-- 
 - 🔮 **Batch Prediction** — upload a CSV, get risk scores for everyone instantly
-- 
 - 💡 **Retention Recommendations** — auto-generated action items from the data
-- 
 - 📥 **Export to CSV** — download results and share them
-- 
 - 🎨 **Custom Dark UI** — Streamlit + CSS, actually looks good
 
 ---
@@ -57,12 +53,18 @@ Turns out — yes, pretty well. This is my end-to-end ML project using the IBM H
 
 ---
 
-## 🔧 ML Pipeline
-Raw CSV → Cleaning & EDA → Feature Engineering (27 features, label encoding, scaling)
+## 📄 Business Analyst Documentation
 
-→ Train 3 models → Pick best (XGBoost, ROC-AUC 0.82) → Save with joblib
+Apart from the ML side, I also created proper BA docs for this project — something I wanted to practice alongside the technical stuff.
 
-→ Streamlit app → Upload → Predict → Recommend → Export
+| # | Document |
+|---|---|
+| 0 | Business Case Document |
+| 1 | Business Requirements Document |
+| 2 | Data Dictionary |
+| 3 | EDA & Insights Report |
+| 4 | Project One-Pager |
+| 5 | User Story Document |
 
 ---
 
@@ -83,8 +85,11 @@ Raw CSV → Cleaning & EDA → Feature Engineering (27 features, label encoding,
 ## 🛠 Tech Stack
 
 **Language:** Python 3.10+
+
 **ML:** XGBoost · Random Forest · Logistic Regression · Scikit-learn · SHAP
+
 **Data & Viz:** Pandas · NumPy · Plotly
+
 **App:** Streamlit · Custom CSS (dark mode) · Joblib
 
 ---
@@ -168,7 +173,7 @@ joblib
 
 ## 🙋 Author
 
-**[SAKSHI PARADKAR]** — MSc COMPUTER SCIENCE
+SAKSHI PARADKAR — MSc COMPUTER SCIENCE
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)

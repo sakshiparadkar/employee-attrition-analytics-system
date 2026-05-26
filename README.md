@@ -12,36 +12,6 @@
 
 <br/>
 
-> **Predict which employees are about to quit — before they actually do.**  
-> A production-grade ML web app that turns raw HR data into instant attrition risk scores, visual insights, and data-driven retention strategies.
-
-<br/>
-
-![App Screenshot Placeholder](https://via.placeholder.com/900x450/0a0d14/6366f1?text=Employee+Attrition+Predictor+%E2%80%94+Live+Demo)
-
-<br/>
-
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Streamlit_Cloud-FF4B4B?style=for-the-badge)](https://your-app-link.streamlit.app)
-[![Dataset](https://img.shields.io/badge/📦_Dataset-IBM_HR_Analytics-0052CC?style=for-the-badge)](https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset)
-
-</div>
-
----
-
-## 📌 Table of Contents
-
-- [About the Project](#-about-the-project)
-- [Live Demo](#-live-demo)
-- [Features](#-features)
-- [App Pages](#-app-pages)
-- [ML Pipeline](#-ml-pipeline)
-- [Charts & Visualizations](#-charts--visualizations)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Results](#-results)
-- [What I Learned](#-what-i-learned)
-- [Author](#-author)
 
 ---
 
@@ -59,152 +29,43 @@ This is a **complete, end-to-end machine learning project** — from raw data an
 **Model:** XGBoost Classifier (80.95% accuracy, ROC-AUC: 0.82)  
 **Interface:** Streamlit with custom dark-mode UI
 
----
-
-## 🚀 Live Demo
-
-👉 **[Try the app here](https://your-app-link.streamlit.app)**
-
-No setup needed. You can download a sample CSV directly from the app's Predict page and test it instantly.
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 📊 **Interactive EDA** | 12+ charts exploring who leaves and why, across demographics, satisfaction, and compensation |
-| 🏆 **Model Benchmarking** | Logistic Regression, Random Forest, and XGBoost compared head-to-head with ROC curves |
-| 🔍 **SHAP Explainability** | Understand *why* the model flagged an employee as high-risk |
-| 🔮 **Batch Prediction** | Upload any employee CSV → get instant risk scores for the whole team |
-| 💡 **Retention Recommendations** | Auto-generated, data-driven action items for HR managers |
-| 📥 **Report Export** | Download predictions as a CSV for sharing with leadership |
-| 🎨 **Production UI** | Custom dark-mode Streamlit interface — looks like a real product |
+✨ Features
+
+📊 Interactive EDA — 12+ charts on who leaves and why
+🏆 Model Benchmarking — Logistic Regression vs Random Forest vs XGBoost with ROC curves
+🔍 SHAP Explainability — understand why someone got flagged as high-risk
+🔮 Batch Prediction — upload a CSV, get instant risk scores for everyone
+💡 Retention Recommendations — auto-generated action items from the data
+📥 Export to CSV — download results and share them
+🎨 Custom Dark UI — built with Streamlit + CSS, actually looks goo
 
 ---
 
-## 📱 App Pages
+✨ What it does
 
-### 🏠 Home — Executive Dashboard
-The landing page gives a full workforce health snapshot in under 60 seconds.
-- Overall attrition rate, total churned, avg income, highest-risk department
-- Attrition distribution donut chart
-- Top 3 attrition drivers with rankings
-- "Did You Know?" live-calculated insight (e.g., "Overtime employees are **3.0x** more likely to leave")
-
----
-
-### 📊 EDA & Insights — 3 Tabs, 12+ Charts
-
-**Demographics Tab**
-- Attrition rate by Department, Gender, Job Role, Marital Status
-- Age distribution overlaid by attrition
-
-**Satisfaction & Balance Tab**
-- Job Satisfaction, Work-Life Balance, and Environment Satisfaction vs. Attrition — as line and bar charts
-- Overtime vs. Attrition (the most dramatic visual in the app)
-- Distance from Home histogram
-
-**Compensation & Tenure Tab**
-- Monthly Income box plot (churned vs. retained)
-- Years at Company histogram by attrition
-- Attrition rate by experience band (0–2, 3–5, 6–10, 10+ years)
-- Feature correlation heatmap
-
-> **Key Business Insights** are auto-generated below the tabs — no manual analysis required.
-
----
-
-### 🏆 Model Performance — Full ML Evaluation
-- Side-by-side model comparison table (Accuracy + ROC-AUC)
-- ROC curves for all 3 models on one chart
-- XGBoost confusion matrix (True/False Positives & Negatives)
-- **SHAP Feature Importance** bar chart — Top 15 features driving predictions
-
----
-
-### 🔮 Predict — The Operational Core
-- Upload a CSV → preprocessing → inference → results in seconds
-- Every employee gets a **Risk Score (%)** and a colored badge — 🔴 High / 🟡 Medium / 🟢 Low
-- Filter table by risk level
-- **Retention Recommendations** auto-generated from the uploaded data:
-  - Salary flags, overtime burnout, low satisfaction, poor WLB, new hire risk, dept-level hotspots
-- Risk distribution bar chart
-- Full report CSV download
-
----
-
-## 🔧 ML Pipeline
-
-```
-Raw CSV
-  │
-  ▼
-Data Cleaning & EDA
-  │
-  ▼
-Feature Engineering
-  └─ Label Encoding (7 categorical cols)
-  └─ StandardScaler (numeric features)
-  └─ 27 final features selected
-  │
-  ▼
-Model Training & Comparison
-  └─ Logistic Regression (baseline)
-  └─ Random Forest
-  └─ XGBoost ← selected (best ROC-AUC)
-  │
-  ▼
-Evaluation
-  └─ Accuracy, ROC-AUC, Confusion Matrix
-  └─ SHAP TreeExplainer (feature importance)
-  │
-  ▼
-Serialization (joblib)
-  └─ xgb_model.pkl
-  └─ encoders.pkl
-  └─ scaler.pkl
-  └─ feature_cols.pkl
-  │
-  ▼
-Streamlit Web App
-  └─ Upload → Preprocess → Predict → Recommend → Export
-```
-
----
-
-## 📈 Charts & Visualizations
-
-| Chart | Type | Key Insight |
-|---|---|---|
-| Attrition Distribution | Donut | 16.1% overall attrition rate |
-| Attrition by Department | Bar | Sales has highest attrition |
-| Age Distribution by Attrition | Histogram | 25–35 age band is highest risk |
-| Job Satisfaction vs Attrition | Line | Score 1 employees churn most |
-| Overtime vs Attrition | Bar | Overtime → ~3x higher churn |
-| Monthly Income vs Attrition | Box Plot | Churned employees earn less |
-| Years at Company by Attrition | Histogram | Most churn in first 3 years |
-| Experience Band Attrition | Bar | Freshers (0–2 yrs) highest risk |
-| ROC Curves | Line (multi) | XGBoost AUC = 0.82 |
-| Confusion Matrix | Heatmap | TP/TN/FP/FN breakdown |
-| SHAP Feature Importance | Horizontal Bar | OverTime is #1 driver |
-| Correlation Heatmap | Matrix | Feature relationship analysis |
+📊 EDA Dashboard — 12+ interactive charts exploring who leaves and why
+🏆 Model Comparison — Logistic Regression vs Random Forest vs XGBoost, head-to-head
+🔍 SHAP Explainability — not just what the model predicted, but why
+🔮 Batch Predictions — upload a CSV, get risk scores for everyone instantly
+💡 Retention Recommendations — auto-generated action items based on the data
+📥 Export to CSV — download results and share with your team
 
 ---
 
 ## 🛠 Tech Stack
 
-| Category | Tools |
-|---|---|
-| Language | Python 3.10+ |
-| Web Framework | Streamlit |
-| ML Models | XGBoost, Random Forest, Logistic Regression |
-| ML Utilities | Scikit-learn (encoding, scaling, metrics) |
-| Explainability | SHAP |
-| Data Processing | Pandas, NumPy |
-| Visualization | Plotly Express, Plotly Graph Objects |
-| Serialization | Joblib |
-| Styling | Custom CSS (dark mode) |
+Language: Python 3.10+
+
+ML: XGBoost · Random Forest · Logistic Regression · Scikit-learn · SHAP
+
+Data & Viz: Pandas · NumPy · Plotly
+
+App: Streamlit · Custom CSS (dark mode) · Joblib
 
 ---
 
@@ -295,12 +156,7 @@ joblib
 
 > XGBoost was selected for its superior ROC-AUC score, which matters more than raw accuracy on this imbalanced dataset (84% stayed, 16% left).
 
-**Top 5 Attrition Drivers (SHAP):**
-1. OverTime
-2. MonthlyIncome
-3. Age
-4. JobSatisfaction
-5. YearsAtCompany
+
 
 ---
 
@@ -318,8 +174,8 @@ Building this project taught me things no tutorial ever covered cleanly:
 
 ## 🙋 Author
 
-**[Your Name]**  
-B.Tech / B.Sc [Your Branch] | [Your College Name]
+**[SAKSHI PARADKAR]**  
+MSc COMPUTER SCIENCE STUDENT 
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
 [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)

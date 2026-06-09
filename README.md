@@ -53,6 +53,23 @@ Turns out — yes, pretty well. This is my end-to-end ML project using the IBM H
 
 ---
 
+## 📸 Screenshots
+
+### 🏠 Home
+![Home](https://raw.githubusercontent.com/sakshiparadkar/employee-attrition-analytics-system/main/attrition_system_screenshots/home.png)
+
+### 📊 EDA
+![EDA](https://raw.githubusercontent.com/sakshiparadkar/employee-attrition-analytics-system/main/attrition_system_screenshots/eda.png)
+
+### 🏆 Model Performance
+![Model Performance](https://raw.githubusercontent.com/sakshiparadkar/employee-attrition-analytics-system/main/attrition_system_screenshots/Model_performance.png)
+
+### 🔮 Predict
+![Predict](https://raw.githubusercontent.com/sakshiparadkar/employee-attrition-analytics-system/main/attrition_system_screenshots/predict.png)
+
+### ✅ Prediction Result
+![Prediction Result](https://raw.githubusercontent.com/sakshiparadkar/employee-attrition-analytics-system/main/attrition_system_screenshots/prediction_result.png)
+
 ## 📄 Business Analyst Documentation
 
 Apart from the ML side, I also created proper BA docs for this project — something I wanted to practice alongside the technical stuff.

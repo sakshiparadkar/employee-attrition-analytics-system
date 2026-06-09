@@ -13,7 +13,7 @@
 </div>
 
 ---
-## Live Applications:-https://employee-attrition-analytics-system-2tzhtnn9bzhwno5pbvcugi.streamlit.app/
+🔗 **Live Application:** https://employee-attrition-analytics-system-2tzhtnn9bzhwno5pbvcugi.streamlit.app/
 
 ## 🧠 What's this about?
 
